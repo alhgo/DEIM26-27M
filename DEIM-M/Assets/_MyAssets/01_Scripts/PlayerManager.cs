@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveX = Input.GetAxis("Horizontal");
+       
         //CheckPosition(5);
         bool estoyEnElLiminte = CheckPosition(limits);
         if (estoyEnElLiminte == true)
@@ -72,6 +72,7 @@ public class PlayerManager : MonoBehaviour
 
     void MovePlayer()
     {
-
+        float speed = 5f;
+        transform.Translate(Vector3.right * speed * Time.deltaTime);
     }
 }
