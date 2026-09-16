@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     public float speed;
     [SerializeField] float desplSpeed; //Serializada para poder cambiarla en Unity
     [SerializeField] float rotationSpeed; //velocidad a la que rotaré, en vueltas por segundo
+
 
     //Variable que obtendrá el movimiento del joystick en el eje X
     float moveX;
