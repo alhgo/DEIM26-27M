@@ -2,77 +2,59 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] int ciclos = 200;
+    //Variables de vivo, velocidad y velocidad de desplazamiento lateral
+    bool isAlive;
+    public float speed;
+    [SerializeField] float desplSpeed; //Serializada para poder cambiarla en Unity
 
-    [SerializeField] float limits = 10f;
-
+    //Variable que obtendrá el movimiento del joystick en el eje X
     float moveX;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    //Clase creada con el Input Asset
+    InputActions inputActions;
+
+    //Usaremos el Awake para activar los inputs y obtener los datos
+    private void Awake()
     {
-        StartGame();
+        //Creamos la instancia del asset de entradas IMPORTANTE: hay que activarlo en OnEnable()
+        inputActions = new InputActions();
+
+        //Cuando pulsamos el botón de fuego se ejecuta el método correspondiente
+        inputActions.Player.Fire.started += _ => Fire();
+
+        //Cuando activamos la entrada de mover en X le damos el variable a la valor, y al dejar de tocarla la ponemos en cero
+        inputActions.Player.MoveX.performed += ctx => moveX = ctx.ReadValue<float>();
+        inputActions.Player.MoveX.canceled += _ => moveX = 0f;
+
 
     }
-    // Update is called once per frame
-    void Update()
-    {
-       
-        //CheckPosition(5);
-        bool estoyEnElLiminte = CheckPosition(limits);
-        if (estoyEnElLiminte == true)
-        {
-            MovePlayer();
-        }
-    }
 
-    void StartGame()
+    private void Update()
     {
-        int n = 0;
-        while (n < 10)
-        {
-            n++;
-            //print(n);
-        }
-
-        for (int i = 0; i < ciclos; i++)
-        {
-            print(i);
-        }
+        transform.Translate(Vector3.right * desplSpeed * moveX * Time.deltaTime);
     }
 
 
-
-    bool CheckPosition(float myLimit)
+    void Fire()
     {
-        bool inLimit;
-
-        float posX = transform.position.x;
-        //print(posX);
-
-        if (posX > myLimit && moveX > 0)
-        {
-            transform.position = new Vector3(myLimit, 0, 0);
-            inLimit = false;
-        }
-        else if (posX < -myLimit && moveX < 0)
-        {
-            transform.position = new Vector3(-myLimit, 0, 0);
-            inLimit = false;
-        }
-        else
-        {
-            //(posX);
-            inLimit = true;
-        }
-
-        return inLimit;
-        
+        print("POOM");
     }
 
-    void MovePlayer()
+    //IMPORTANTE: activar el Inpu
+    private void OnEnable()
     {
-        float speed = 5f;
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        inputActions.Enable();
     }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
+
+
+
+
+
+
 }
