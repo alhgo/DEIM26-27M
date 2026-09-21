@@ -16,6 +16,14 @@ public class PlayerManager : MonoBehaviour
 
     //Variable que obiene la rotación del RS
     float rotation;
+    //Rotación máxima
+    float maxRotationZ = 35f;
+    float maxRotationX = 15f;
+
+    //ROTACIÓN SUAVIZADA
+    [SerializeField] float smoothTime = 0.3f;
+    private Vector3 velocity = Vector3.zero;
+    Vector3 currentRot;
 
     //Clase creada con el Input Asset
     InputActions inputActions;
@@ -45,10 +53,28 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector3.right * desplSpeed * moveX * Time.deltaTime,Space.World);
-        transform.Translate(Vector3.up * desplSpeed * moveY * Time.deltaTime);
+        MovePlayer();
+        RotatePlayer();      
 
-        transform.Rotate(Vector3.forward * rotation * rotationSpeed * Time.deltaTime * -360);
+    }
+
+    void MovePlayer()
+    {
+        transform.Translate(Vector3.right * desplSpeed * moveX * Time.deltaTime, Space.World);
+        transform.Translate(Vector3.up * desplSpeed * moveY * Time.deltaTime, Space.World);
+    }
+
+    void RotatePlayer()
+    {
+        //Rotación loca
+        //transform.Rotate(Vector3.forward * rotation * rotationSpeed * Time.deltaTime * -360);
+
+        //Sumo el vector de rotacion en Z mas el de rotacion en X para bascular
+        Vector3 vectorRotZ = Vector3.forward * -maxRotationZ * moveX;
+        Vector3 vectorRotX = Vector3.right * -maxRotationX * moveY;
+        Vector3 vectorRot = vectorRotX + vectorRotZ;
+        currentRot = Vector3.SmoothDamp(currentRot, vectorRot, ref velocity, smoothTime);
+        transform.eulerAngles = currentRot;
     }
 
 
