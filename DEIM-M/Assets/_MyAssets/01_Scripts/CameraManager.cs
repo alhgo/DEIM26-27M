@@ -25,6 +25,6 @@ public class CameraManager : MonoBehaviour
         //Me traslado a esa posición
         transform.position = playerTransfom.position + offset;
         //También puedo rotar con el objeto
-        transform.rotation = playerTransfom.rotation;
+        //transform.rotation = playerTransfom.rotation;
     }
 }

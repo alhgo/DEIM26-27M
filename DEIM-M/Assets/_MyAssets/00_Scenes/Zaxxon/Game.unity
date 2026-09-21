@@ -1054,7 +1054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
   speed: 0
-  desplSpeed: 5
+  desplSpeed: 30
   rotationSpeed: 2
 --- !u!4 &2137645004
 Transform:
