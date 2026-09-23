@@ -8,7 +8,7 @@ public class EnemyManager : MonoBehaviour
     //El componente playerManager que tendrá el jugador
     [SerializeField] PlayerManager playerManager;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Start is called once before the first execution  of Update after the MonoBehaviour is created
     void Start()
     {
         //Necesito acceder al objeto (jugador) que tiene el componente PlayerManager
