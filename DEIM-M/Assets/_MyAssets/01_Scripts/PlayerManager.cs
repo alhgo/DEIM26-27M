@@ -56,8 +56,15 @@ public class PlayerManager : MonoBehaviour
     private void Update()
     {
         MovePlayer();
-        RotatePlayer();      
+        RotatePlayer();
+        CheckLimits();
 
+    }
+
+    void CheckLimits()
+    {
+        float myPosX = transform.position.x;
+        float myPosY = transform.position.y;
     }
 
     void MovePlayer()
